@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">StudySwipe</string>
+    <string name="title_home">Home</string>
+    <string name="title_add">Add</string>
+    <string name="title_statistic">Statistics</string>
+    <string name="title_setting">Settings</string>
+    <string name="messages_header">StudySwipe</string>
+</resources>
