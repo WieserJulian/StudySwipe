@@ -5,4 +5,8 @@
     <string name="title_statistic">Statistics</string>
     <string name="title_setting">Settings</string>
     <string name="messages_header">StudySwipe</string>
+    <string name="topic_name">TOPIC NAME</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_new_question">Add new Question</string>
 </resources>

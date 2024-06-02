@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 
 class Question(
-    val question: String,
+    var question: String,
     val imagePath: String,
     val points: Number
 ) {

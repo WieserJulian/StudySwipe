@@ -1,13 +1,23 @@
 package com.example.studyswipe.ui.create
 
+import android.os.Build
 import android.os.Bundle
+import android.os.FileUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.addCallback
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studyswipe.R
+import com.example.studyswipe.app.Question
+import com.example.studyswipe.app.QuestionAdapter
 import com.example.studyswipe.databinding.FragmentCreateTopicBinding
 
 class CreateTopicFragment : Fragment() {
@@ -17,7 +27,10 @@ class CreateTopicFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val questions = mutableListOf<EditQuestionFragment>()
+    private lateinit var questionAdapter: QuestionAdapter
 
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -26,15 +39,33 @@ class CreateTopicFragment : Fragment() {
 
         _binding = FragmentCreateTopicBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        binding.topicName.text = "Ausbau der Studyswipe App"
 
-        val title = CreateTopicFragmentArgs.fromBundle(requireArguments()).title
+        val recyclerView = binding.createQuestionOutlet
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        questionAdapter = QuestionAdapter(childFragmentManager, questions)
+        recyclerView.adapter = questionAdapter
 
-        binding.topicName.text = title
+        // Set up the btnaddQuestion button
+        binding.btnaddNewquestion.setOnClickListener {
+            println("Add new question")
+            // Add a new EditQuestionFragment to the list
+            questions.add(EditQuestionFragment())
 
-        // Handle the back button event
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            root.findNavController().navigate(R.id.navigation_add)
+            // Notify the adapter that the data set has changed
+            questionAdapter.notifyItemInserted(questions.size - 1)
         }
+
+        binding.btnsaveTopic.setOnClickListener {
+            if (questions.isNotEmpty()) {
+                val editTextValues = questions.map { editQuestionFragment -> editQuestionFragment.getQuestion() }
+                println(editTextValues.map { it.question })
+//            TODO: Save the topic to the "database"
+            }
+            findNavController().navigate(R.id.action_createTopicFragment_to_navigation_add)
+        }
+
+
         return root
     }
 
