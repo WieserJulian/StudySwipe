@@ -12,6 +12,7 @@ import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,7 +38,7 @@ class CreateTopicFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
+        var editViewModel = ViewModelProvider(requireActivity()).get(EditQuestionViewModel::class.java)
         _binding = FragmentCreateTopicBinding.inflate(inflater, container, false)
         val root: View = binding.root
         binding.topicName.text = "Ausbau der Studyswipe App"
@@ -51,7 +52,7 @@ class CreateTopicFragment : Fragment() {
         binding.btnaddNewquestion.setOnClickListener {
             println("Add new question")
             // Add a new EditQuestionFragment to the list
-            questions.add(EditQuestionFragment.newInstance(counter))
+            questions.add(EditQuestionFragment())
             counter += 1
 
             // Notify the adapter that the data set has changed
@@ -60,7 +61,10 @@ class CreateTopicFragment : Fragment() {
 
         binding.btnsaveTopic.setOnClickListener {
             if (questions.isNotEmpty()) {
-
+                val listQuestion: List<Question> = editViewModel.getAllQuestions()
+                for (question in listQuestion) {
+                    Log.d("CreateTopicFragment", question.question)
+                }
 //            TODO: Save the topic to the "database"
             }
             findNavController().navigate(R.id.action_createTopicFragment_to_navigation_add)

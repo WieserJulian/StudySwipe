@@ -20,10 +20,12 @@ class EditQuestionFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private val question = Question("","", 0)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("EditQuestionFragment onCreate: $param")
-        println(arguments?.getInt(ARG_PARAM))
+        println(arguments?.getInt("questionID"))
     }
 
     override fun onCreateView(
@@ -36,7 +38,22 @@ class EditQuestionFragment : Fragment() {
         var editViewModel = ViewModelProvider(requireActivity()).get(EditQuestionViewModel::class.java)
         _binding = FragmentEditQuestionBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        println(param)
+        editViewModel.addQuestion(param, question)
+
+        binding.editTextTextMultiLine.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                question.question = s.toString()
+                editViewModel.updateQuestion(param, question)
+            }
+
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+                // no-op
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                // no-op
+            }
+        })
 
         return root
     }
@@ -44,16 +61,6 @@ class EditQuestionFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        private const val ARG_PARAM = "questionID"
-
-        @JvmStatic
-        fun newInstance(questionID: Int) = EditQuestionFragment().apply {
-            param = questionID
-            arguments = bundleOf(ARG_PARAM to questionID)
-        }
     }
 
 
