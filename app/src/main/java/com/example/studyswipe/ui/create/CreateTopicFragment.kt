@@ -29,6 +29,7 @@ class CreateTopicFragment : Fragment() {
     private val binding get() = _binding!!
     private val questions = mutableListOf<EditQuestionFragment>()
     private lateinit var questionAdapter: QuestionAdapter
+    private var counter: Int = 0
 
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreateView(
@@ -50,7 +51,8 @@ class CreateTopicFragment : Fragment() {
         binding.btnaddNewquestion.setOnClickListener {
             println("Add new question")
             // Add a new EditQuestionFragment to the list
-            questions.add(EditQuestionFragment())
+            questions.add(EditQuestionFragment.newInstance(counter))
+            counter += 1
 
             // Notify the adapter that the data set has changed
             questionAdapter.notifyItemInserted(questions.size - 1)
@@ -58,8 +60,7 @@ class CreateTopicFragment : Fragment() {
 
         binding.btnsaveTopic.setOnClickListener {
             if (questions.isNotEmpty()) {
-                val editTextValues = questions.map { editQuestionFragment -> editQuestionFragment.getQuestion() }
-                println(editTextValues.map { it.question })
+
 //            TODO: Save the topic to the "database"
             }
             findNavController().navigate(R.id.action_createTopicFragment_to_navigation_add)

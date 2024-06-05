@@ -7,10 +7,22 @@ import com.example.studyswipe.app.Question
 
 class EditQuestionViewModel : ViewModel() {
 
-    private val mutableSelectedItem = MutableLiveData<Question>()
-    val question: LiveData<Question> get() = mutableSelectedItem
+    private val mutableSelectedItem = MutableLiveData<MutableMap<String, Question>>(mutableMapOf())
+    val question: LiveData<MutableMap<String, Question>> get() = mutableSelectedItem
 
-    fun question(q: Question) {
-        mutableSelectedItem.value = q
+    fun addQuestion(id: String, q: Question) {
+        mutableSelectedItem.value?.set(id, q);
+    }
+
+    fun getQuestion(id: String): Question? {
+        return mutableSelectedItem.value?.get(id)
+    }
+
+    fun removeQuestion(id: String) {
+        mutableSelectedItem.value?.remove(id)
+    }
+
+    fun getAllQuestions(): List<Question> {
+        return mutableSelectedItem.value?.values?.toList() ?: listOf()
     }
 }
