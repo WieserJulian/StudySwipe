@@ -30,8 +30,8 @@ class HomeFragment : Fragment() {
         val root: View = binding.root
 
         binding.btnLastTopic.setOnClickListener() {
-            val action = HomeFragmentDirectory.actionNavigationHomeToSwipeCardFragment()
-            findNavController().navigate()
+            val action = HomeFragmentDirections.actionNavigationHomeToNavigationSwipeCard(homeViewModel.getLastTopic())
+            findNavController().navigate(action)
         }
         return root
     }

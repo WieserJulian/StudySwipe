@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_navigation_home_to_navigation_swipe_card"
-            app:destination="@id/navigation_swipe_card" />
+            app:destination="@id/navigation_swipe_card" >
+            <argument
+                android:name="topic"
+                app:argType="string" />
+        </action>
     </fragment>
 
     <fragment
