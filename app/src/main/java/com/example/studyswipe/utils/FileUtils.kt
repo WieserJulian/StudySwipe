@@ -28,10 +28,12 @@ object FileUtils {
                 questions = listOf(Question(
                     question = "What is 5 + 7?",
                     imagePath = "test.jpg",
+                    awnser = "12",
                     points = 12
                 ), Question(
                     question = "What is the capital of France?",
                     imagePath = "YIKES.png",
+                    awnser = "Paris",
                     points = 42
                 )
                 )
