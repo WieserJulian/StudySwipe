@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.studyswipe.app.PreviousAttempt
 import com.example.studyswipe.databinding.FragmentQuestionSelectBinding
 import com.example.studyswipe.ui.home.HomeFragmentDirections
 import com.example.studyswipe.ui.home.HomeViewModel
@@ -19,20 +20,26 @@ class QuestionSelectDialogFragment : DialogFragment() {
         return activity?.let {
             _binding = FragmentQuestionSelectBinding.inflate(LayoutInflater.from(context))
 
+
+
             val homeViewModel =
                 ViewModelProvider(this).get(HomeViewModel::class.java)
 
             binding.buttonAll.setOnClickListener {
-                val action = HomeFragmentDirections.actionNavigationHomeToNavigationSwipeCard(homeViewModel.getLastTopic(), "positive")
+                val action = HomeFragmentDirections.actionNavigationHomeToNavigationSwipeCard(homeViewModel.getLastTopic(), PreviousAttempt.POSITIVE)
                 findNavController().navigate(action)
+                dismiss()
+
             }
             binding.buttonRetryNegative.setOnClickListener {
-                val action = HomeFragmentDirections.actionNavigationHomeToNavigationSwipeCard(homeViewModel.getLastTopic(), "retry")
+                val action = HomeFragmentDirections.actionNavigationHomeToNavigationSwipeCard(homeViewModel.getLastTopic(), PreviousAttempt.RETRY)
                 findNavController().navigate(action)
+                dismiss()
             }
             binding.buttonNegative.setOnClickListener {
-                val action = HomeFragmentDirections.actionNavigationHomeToNavigationSwipeCard(homeViewModel.getLastTopic(), "negative")
+                val action = HomeFragmentDirections.actionNavigationHomeToNavigationSwipeCard(homeViewModel.getLastTopic(), PreviousAttempt.NEGATIVE)
                 findNavController().navigate(action)
+                dismiss()
             }
 
             val builder = AlertDialog.Builder(it)

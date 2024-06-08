@@ -6,27 +6,28 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.studyswipe.R
+import com.example.studyswipe.app.PreviousAttempt
+import com.example.studyswipe.app.Question
 import com.example.studyswipe.databinding.FragmentSwipeCardBinding
 import com.example.studyswipe.ui.home.HomeViewModel
-import com.example.studyswipe.util.Constants
+import com.example.studyswipe.utils.Constants
 
 class SwipeCardFragment : Fragment() {
     private lateinit var cardView: CardView
     private var hasMoved: Boolean = false
     private var hasFlipped: Boolean = false
-    private var loadNextQuestion: Boolean = false
     private lateinit var swipeCardViewModel: SwipeCardViewModel;
-    private var activeQuestion: Pair<String, String> = Pair("", "")
+    private var activeQuestion: Question = Question("", "",  0)
     private var state: String = ""
 
     private var _binding: FragmentSwipeCardBinding? = null
@@ -48,18 +49,22 @@ class SwipeCardFragment : Fragment() {
 
         val root: View = binding.root
         val topicName = arguments?.getString("topic") ?: ""
-        val questionType = arguments?.getString("questionType") ?: "positive"
-        Log.d("SwipeCardFragment", "Topic name: $topicName")
-        val questions = homeViewModel.getQuestion(topicName)
-//        questions = questions.filter { it.second == questionType }
+        val questionType = PreviousAttempt.valueOf(arguments?.getString("questionType") ?: PreviousAttempt.POSITIVE.toString())
+        Log.d("SwipeCardFragment", "Topic name: $topicName Question type: $questionType")
+        var questions = homeViewModel.getQuestion(topicName)
+        when (questionType) {
+            PreviousAttempt.RETRY -> questions = questions.filter { it.previousAttempt == PreviousAttempt.NEGATIVE || it.previousAttempt == PreviousAttempt.RETRY}
+            PreviousAttempt.NEGATIVE -> questions = questions.filter { it.previousAttempt == PreviousAttempt.NEGATIVE}
+            PreviousAttempt.POSITIVE -> {}
+        }
         swipeCardViewModel.setAllQuestion(questions)
 
         binding.topicName.text = topicName
         binding.swapImage.animate().alpha(1f).start()
         binding.questionPoints.animate().alpha(0f).start()
         activeQuestion = swipeCardViewModel.getNextQuestion()
-        binding.questionText.text = activeQuestion.first
-        binding.questionPoints.text = (0..10).random().toString() //TODO: Change to actual points
+        binding.questionText.text = activeQuestion.question
+        binding.questionPoints.text = activeQuestion.points.toString()
         return root
     }
 
@@ -72,7 +77,7 @@ class SwipeCardFragment : Fragment() {
         cardView.setOnClickListener {
             if (!hasFlipped) {
                 hasFlipped = true
-                flipCard(activeQuestion.second)
+                flipCard(activeQuestion.awnser)
             }
         }
 
@@ -98,16 +103,16 @@ class SwipeCardFragment : Fragment() {
                             Log.d("SwipeCardFragment", "Swiped left")
                             state = "positive"
 
-                        } else if (cardView.x  - cardStart > Constants.MIN_SWIPE_DISTANCE && state != "negative") {
+                        } else if (cardView.x - cardStart > Constants.MIN_SWIPE_DISTANCE && state != "negative") {
                             Log.d("SwipeCardFragment", "Swiped right")
                             state = "negative"
                         }
 
                     }
 
-                    MotionEvent.ACTION_UP ->  {
+                    MotionEvent.ACTION_UP -> {
                         hasMoved = false
-                        if (!swipeCardViewModel.hasNewQuestion() && state != "")  {
+                        if (!swipeCardViewModel.hasNewQuestion() && state != "") {
                             cardView.animate().alpha(0f).start()
                             safeAwnser(state)
                             Log.d("SwipeCardFragment", "No more questions")
@@ -158,7 +163,7 @@ class SwipeCardFragment : Fragment() {
         activeQuestion = swipeCardViewModel.getNextQuestion()
         binding.swapImage.alpha = 1f
         binding.questionPoints.alpha = 0f
-        binding.questionText.text = activeQuestion.first
+        binding.questionText.text = activeQuestion.question
         binding.questionPoints.text = (0..10).random().toString() //TODO: Change to actual points
         cardView.alpha = 0f // Set initial alpha to 0
         cardView.animate().alpha(1f).setDuration(100).withEndAction {

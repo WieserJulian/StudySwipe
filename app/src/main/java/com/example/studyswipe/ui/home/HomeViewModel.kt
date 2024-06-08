@@ -3,27 +3,30 @@ package com.example.studyswipe.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.util.Queue
+import com.example.studyswipe.app.Question
 
 class HomeViewModel : ViewModel() {
 
     private val _topics = MutableLiveData<List<String>>(listOf("Math", "Science", "History"))
     val topics: LiveData<List<String>> = _topics
 
-    val topicQuestion: Map<String, List<Pair<String, String>>> = mapOf(
-        "Math" to listOf(Pair("What is 1 + 1?", "2"), Pair("What is 2 + 2?", "4")),
+    val topicQuestion: Map<String, List<Question>> = mapOf(
+        "Math" to listOf(
+            Question("What is 2 + 2?", "4", 0),
+            Question("What is 3 * 3?", "9", 0)
+        ),
         "Science" to listOf(
-            Pair("What is the powerhouse of the cell?", "Mitochondria"),
-            Pair("What is the atomic number of Hydrogen?", "1")
+            Question("What is the atomic number of Hydrogen?", "1",  0),
+            Question("What is the atomic number of Helium?", "2", 0)
         ),
         "History" to listOf(
-            Pair("What year did the Titanic sink?", "1912"),
-            Pair("Who was the first president of the United States?", "George Washington")
+            Question("What year was the Declaration of Independence signed?", "1776", 0),
+            Question("What year did the Civil War end?", "1865",  0)
         )
     )
 
 
-    fun getQuestion(topic: String): List<Pair<String, String>> {
+    fun getQuestion(topic: String): List<Question> {
         return topicQuestion[topic] ?: listOf()
     }
 

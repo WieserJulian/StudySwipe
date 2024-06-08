@@ -19,7 +19,7 @@
                 app:argType="string" />
             <argument
                 android:name="questionType"
-                app:argType="string" />
+                app:argType="com.example.studyswipe.app.PreviousAttempt" />
         </action>
     </fragment>
   
