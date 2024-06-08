@@ -10,7 +10,11 @@ object TopicLibrary {
         topics = FileUtils.loadFromJson(context)
     }
 
-    fun getTopic(): Topic {
+    fun getTopicsNames(): List<String> {
+        return topics.map { it.name }
+    }
+
+    fun getTopic(topicName: String): Topic {
         // TODO
         return topics[0]
     }
