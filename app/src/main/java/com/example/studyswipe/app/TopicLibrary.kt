@@ -7,10 +7,6 @@ import java.io.File
 object TopicLibrary {
     var topics: ArrayList<Topic> = ArrayList()
 
-    fun initialize(context: Context) {
-        topics = FileUtils.loadFromJson(context) as ArrayList<Topic>
-    }
-
     fun getTopicsNames(): List<String> {
         return topics.map { it.name }
     }

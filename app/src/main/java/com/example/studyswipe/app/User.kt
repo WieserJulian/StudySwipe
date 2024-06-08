@@ -1,8 +1,8 @@
 package com.example.studyswipe.app
 
-class User (
-    var positiveCounter: Number,
-    var negativeCounter: Number,
-    var retryCounter: Number,
-    var points: Number
-) {}
+object User {
+    var positiveCounter: Number = 0
+    var negativeCounter: Number = 0
+    var retryCounter: Number = 0
+    var points: Number = 0
+}
