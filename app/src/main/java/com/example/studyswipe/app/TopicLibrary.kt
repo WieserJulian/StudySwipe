@@ -1,9 +1,5 @@
 package com.example.studyswipe.app
 
-import android.content.Context
-import com.example.studyswipe.utils.FileUtils
-import java.io.File
-
 object TopicLibrary {
     var topics: ArrayList<Topic> = ArrayList()
 
@@ -23,9 +19,11 @@ object TopicLibrary {
         topics.remove(topic)
     }
 
-    fun updateTopic(topic: Topic) {
+    fun updateQuestions(topicName: String, allQuestion: List<Question>) {
+        val topic = getTopic(topicName)
         removeTopic(topic)
-        addTopic(topic.name, topic.questions)
+        addTopic(topicName, allQuestion)
+
     }
 
 }
