@@ -9,7 +9,15 @@
         android:id="@+id/navigation_home"
         android:name="com.example.studyswipe.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_swipe_card"
+            app:destination="@id/navigation_swipe_card" >
+            <argument
+                android:name="topic"
+                app:argType="string" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_add"
@@ -27,4 +35,11 @@
         android:name="com.example.studyswipe.ui.settings.SettingFragment"
         android:label="@string/title_setting"
         tools:layout="@layout/fragment_setting"/>
+
+
+    <fragment
+        android:id="@+id/navigation_swipe_card"
+        android:name="com.example.studyswipe.ui.swipe.SwipeCardFragment"
+        android:label="Swipe Card"
+        tools:layout="@layout/fragment_swipe_card" />
 </navigation>
