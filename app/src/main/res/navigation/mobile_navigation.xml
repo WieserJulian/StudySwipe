@@ -16,6 +16,9 @@
             <argument
                 android:name="topic"
                 app:argType="string" />
+            <argument
+                android:name="questionType"
+                app:argType="string" />
         </action>
     </fragment>
 

@@ -1,5 +1,6 @@
 package com.example.studyswipe.ui.home
 
+import QuestionSelectDialogFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,15 +24,13 @@ class HomeFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-                ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         binding.btnLastTopic.setOnClickListener() {
-            val action = HomeFragmentDirections.actionNavigationHomeToNavigationSwipeCard(homeViewModel.getLastTopic())
-            findNavController().navigate(action)
+            val dialog = QuestionSelectDialogFragment()
+            dialog.show(parentFragmentManager, "QuestionSelectDialogFragment")
         }
         return root
     }

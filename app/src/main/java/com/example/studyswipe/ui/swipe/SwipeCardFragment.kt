@@ -48,8 +48,11 @@ class SwipeCardFragment : Fragment() {
 
         val root: View = binding.root
         val topicName = arguments?.getString("topic") ?: ""
+        val questionType = arguments?.getString("questionType") ?: "positive"
         Log.d("SwipeCardFragment", "Topic name: $topicName")
-        swipeCardViewModel.setAllQuestion(homeViewModel.getQuestion(topicName ?: ""))
+        val questions = homeViewModel.getQuestion(topicName)
+//        questions = questions.filter { it.second == questionType }
+        swipeCardViewModel.setAllQuestion(questions)
 
         binding.topicName.text = topicName
         binding.swapImage.animate().alpha(1f).start()
