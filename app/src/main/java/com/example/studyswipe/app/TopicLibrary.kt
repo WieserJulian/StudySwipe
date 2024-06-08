@@ -2,12 +2,13 @@ package com.example.studyswipe.app
 
 import android.content.Context
 import com.example.studyswipe.utils.FileUtils
+import java.io.File
 
 object TopicLibrary {
-    var topics: List<Topic> = listOf()
+    var topics: ArrayList<Topic> = ArrayList()
 
     fun initialize(context: Context) {
-        topics = FileUtils.loadFromJson(context)
+        topics = FileUtils.loadFromJson(context) as ArrayList<Topic>
     }
 
     fun getTopicsNames(): List<String> {
@@ -15,20 +16,20 @@ object TopicLibrary {
     }
 
     fun getTopic(topicName: String): Topic {
-        // TODO
-        return topics[0]
+        return topics.filter { it.name == topicName }.first()
     }
 
     fun addTopic(topicName: String, questions: List<Question>) {
-        // TODO
+        topics += Topic(topicName, questions)
     }
 
     fun removeTopic(topic: Topic) {
-        // TODO
+        topics.remove(topic)
     }
 
     fun updateTopic(topic: Topic) {
-        // TODO
+        removeTopic(topic)
+        addTopic(topic.name, topic.questions)
     }
 
 }

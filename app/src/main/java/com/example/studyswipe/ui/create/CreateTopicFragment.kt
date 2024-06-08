@@ -67,6 +67,7 @@ class CreateTopicFragment : Fragment() {
                     Log.d("CreateTopicFragment", question.question)
                 }
                 TopicLibrary.addTopic(binding.topicName.text.toString(), listQuestion)
+                this.context?.let { it1 -> com.example.studyswipe.utils.FileUtils.saveAsJson(it1) }
             }
             findNavController().navigate(R.id.action_createTopicFragment_to_navigation_add)
         }
