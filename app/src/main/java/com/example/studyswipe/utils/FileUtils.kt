@@ -1,6 +1,7 @@
 package com.example.studyswipe.utils
 
 import android.content.Context
+import com.example.studyswipe.app.PreviousAttempt
 import com.example.studyswipe.app.Question
 import com.example.studyswipe.app.Topic
 import com.example.studyswipe.app.TopicLibrary
@@ -29,12 +30,14 @@ object FileUtils {
                     question = "What is 5 + 7?",
                     imagePath = "test.jpg",
                     awnser = "12",
-                    points = 12
+                    points = 12,
+                    previousAttempt = PreviousAttempt.POSITIVE
                 ), Question(
                     question = "What is the capital of France?",
                     imagePath = "YIKES.png",
                     awnser = "Paris",
-                    points = 42
+                    points = 42,
+                    previousAttempt = PreviousAttempt.RETRY
                 )
                 )
             ))
