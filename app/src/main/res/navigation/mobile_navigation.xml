@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@id/navigation_home">
 
+<!--  Home / Swipe  -->
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.studyswipe.ui.home.HomeFragment"
@@ -21,28 +22,44 @@
                 app:argType="string" />
         </action>
     </fragment>
-
+  
+    <fragment
+        android:id="@+id/navigation_swipe_card"
+        android:name="com.example.studyswipe.ui.swipe.SwipeCardFragment"
+        android:label="Swipe Card"
+        tools:layout="@layout/fragment_swipe_card" />
+<!-- Add/Edit -->
     <fragment
         android:id="@+id/navigation_add"
         android:name="com.example.studyswipe.ui.add.AddFragment"
         android:label="@string/title_add"
-        tools:layout="@layout/fragment_add" />
+        tools:layout="@layout/fragment_add">
+        <action
+            android:id="@+id/action_navigation_add_to_createTopicFragment"
+            app:destination="@id/createTopicFragment" />
+    </fragment>
+  
+    <fragment
+        android:id="@+id/createTopicFragment"
+        android:name="com.example.studyswipe.ui.create.CreateTopicFragment"
+        android:label="CreateTopicFragment" >
+        <action
+            android:id="@+id/action_createTopicFragment_to_navigation_add"
+            app:destination="@id/navigation_add" />
+    </fragment>
+  
+<!-- Statistic   -->
 
     <fragment
         android:id="@+id/navigation_statistic"
         android:name="com.example.studyswipe.ui.statistics.StatisticFragment"
         android:label="@string/title_statistic"
         tools:layout="@layout/fragment_statistic" />
+<!--  Settings   -->
+
     <fragment
         android:id="@+id/navigation_setting"
         android:name="com.example.studyswipe.ui.settings.SettingFragment"
         android:label="@string/title_setting"
-        tools:layout="@layout/fragment_setting"/>
-
-
-    <fragment
-        android:id="@+id/navigation_swipe_card"
-        android:name="com.example.studyswipe.ui.swipe.SwipeCardFragment"
-        android:label="Swipe Card"
-        tools:layout="@layout/fragment_swipe_card" />
+        tools:layout="@layout/fragment_setting" />
 </navigation>

@@ -5,4 +5,6 @@
     <string name="title_statistic">Statistics</string>
     <string name="title_setting">Settings</string>
     <string name="messages_header">StudySwipe</string>
+    <string name="topic_name">TOPIC NAME</string>x
+    <string name="add_new_question">Add new Question</string>
 </resources>

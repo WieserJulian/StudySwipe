@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.studyswipe.R
 import com.example.studyswipe.databinding.FragmentAddBinding
 
 class AddFragment : Fragment() {
@@ -23,12 +24,13 @@ class AddFragment : Fragment() {
         val addViewModel = ViewModelProvider(this).get(AddViewModel::class.java)
 
         _binding = FragmentAddBinding.inflate(inflater, container, false)
+        val btnAddTopic = binding.btnAddTopic
         val root: View = binding.root
 
-        val textView: TextView = binding.textDashboard
-        addViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        btnAddTopic.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_add_to_createTopicFragment)
         }
+
         return root
     }
 
