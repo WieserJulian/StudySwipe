@@ -8,7 +8,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.studyswipe.app.TopicLibrary
 import com.example.studyswipe.databinding.ActivityMainBinding
+import com.example.studyswipe.utils.FileUtils
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +19,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        FileUtils.loadFromJson(this)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
