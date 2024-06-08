@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.studyswipe.R
 import com.example.studyswipe.app.Question
 import com.example.studyswipe.app.QuestionAdapter
+import com.example.studyswipe.app.TopicLibrary
 import com.example.studyswipe.databinding.FragmentCreateTopicBinding
 
 class CreateTopicFragment : Fragment() {
@@ -65,7 +66,7 @@ class CreateTopicFragment : Fragment() {
                 for (question in listQuestion) {
                     Log.d("CreateTopicFragment", question.question)
                 }
-//            TODO: Save the topic to the "database"
+                TopicLibrary.addTopic(binding.topicName.text.toString(), listQuestion)
             }
             findNavController().navigate(R.id.action_createTopicFragment_to_navigation_add)
         }

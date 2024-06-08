@@ -15,7 +15,7 @@ object TopicLibrary {
         return topics[0]
     }
 
-    fun addTopic(topic: Topic) {
+    fun addTopic(topicName: String, questions: List<Question>) {
         // TODO
     }
 
