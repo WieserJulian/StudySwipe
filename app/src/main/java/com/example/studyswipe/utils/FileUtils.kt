@@ -45,7 +45,5 @@ object FileUtils {
         return gson.fromJson(jsonString, type)
     }
 
-    // TODO: virtual safe of questions for easy access
-
 }
 

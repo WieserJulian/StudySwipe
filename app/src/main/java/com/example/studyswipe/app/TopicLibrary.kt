@@ -9,5 +9,23 @@ object TopicLibrary {
     fun initialize(context: Context) {
         topics = FileUtils.loadFromJson(context)
     }
+
+    fun getTopic(): Topic {
+        // TODO
+        return topics[0]
+    }
+
+    fun addTopic(topic: Topic) {
+        // TODO
+    }
+
+    fun removeTopic(topic: Topic) {
+        // TODO
+    }
+
+    fun updateTopic(topic: Topic) {
+        // TODO
+    }
+
 }
 
