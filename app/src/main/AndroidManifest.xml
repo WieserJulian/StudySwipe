@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudySwipe"
         tools:targetApi="tiramisu"
+        android:appCategory="productivity"
         android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".MainActivity"

@@ -1,10 +1,22 @@
 <resources>
     <string name="app_name">StudySwipe</string>
-    <string name="title_home">Home</string>
     <string name="title_add">Add</string>
     <string name="title_statistic">Statistics</string>
     <string name="title_setting">Settings</string>
     <string name="messages_header">StudySwipe</string>
-    <string name="topic_name">TOPIC NAME</string>x
+    <string name="topic_name">TOPIC NAME</string>
     <string name="add_new_question">Add new Question</string>
+<!--    Swipe Card -->
+    <string name="selectQuestionTitle">Select Questions:\n%s</string>
+<!--    Home Card -->
+    <string name="home_card_title">Home</string>
+    <string name="lastTopic">Last Topic: \n %s</string>
+
+<!--    Hints -->
+    <string name="hintCickToFlip">Click the card to Flip it and see the anwser</string>
+    <string name="hintSwipeToLeft">Swipe to the left if you correctly answer the question</string>
+    <string name="hintSwipeToRight">Swipe to the right if you incorrectly answer the question</string>
+    <string name="hintSwipeToDown">Swipe down if you want to retry later this question</string>
+    <string name="place_holder">PLACE_HOLDER_SO_IDE_DONT_CRY</string>
+
 </resources>

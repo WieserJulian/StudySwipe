@@ -42,7 +42,7 @@ object FileUtils {
                         imagePath = "math2.jpg",
                         answer = "48",
                         points = 15,
-                        previousAttempt = PreviousAttempt.NEGATIVE
+                        previousAttempt = PreviousAttempt.POSITIVE
                     ),
                     Question(
                         question = "What is the square root of 81?",
@@ -56,7 +56,7 @@ object FileUtils {
                         imagePath = "math4.jpg",
                         answer = "8",
                         points = 10,
-                        previousAttempt = PreviousAttempt.RETRY
+                        previousAttempt = PreviousAttempt.POSITIVE
                     ),
                     Question(
                         question = "What is 9 / 3?",
@@ -70,7 +70,7 @@ object FileUtils {
                         imagePath = "math6.jpg",
                         answer = "3.14",
                         points = 25,
-                        previousAttempt = PreviousAttempt.NEGATIVE
+                        previousAttempt = PreviousAttempt.POSITIVE
                     ),
                     Question(
                         question = "What is the perimeter of a rectangle with length 5 and width 3?",
@@ -84,14 +84,14 @@ object FileUtils {
                         imagePath = "math8.jpg",
                         answer = "49",
                         points = 15,
-                        previousAttempt = PreviousAttempt.RETRY
+                        previousAttempt = PreviousAttempt.POSITIVE
                     ),
                     Question(
                         question = "What is the factorial of 5 (5!)?",
                         imagePath = "math9.jpg",
                         answer = "120",
                         points = 30,
-                        previousAttempt = PreviousAttempt.NEGATIVE
+                        previousAttempt = PreviousAttempt.POSITIVE
                     ),
                     Question(
                         question = "What is the sum of the angles in a triangle?",
@@ -114,7 +114,7 @@ object FileUtils {
                         question = "Which company manufactures the Mustang?",
                         answer = "Ford",
                         points = 10,
-                        previousAttempt = PreviousAttempt.NEGATIVE
+                        previousAttempt = PreviousAttempt.RETRY
                     ),
                     Question(
                         question = "What is the most common type of fuel used in cars?",
@@ -138,7 +138,7 @@ object FileUtils {
                         question = "Which car company produces the 911 model?",
                         answer = "Porsche",
                         points = 20,
-                        previousAttempt = PreviousAttempt.NEGATIVE
+                        previousAttempt = PreviousAttempt.POSITIVE
                     ),
                     Question(
                         question = "In which year was the first car made?",
@@ -156,7 +156,7 @@ object FileUtils {
                         question = "Which car is often referred to as a 'supercar killer'?",
                         answer = "Nissan GT-R",
                         points = 20,
-                        previousAttempt = PreviousAttempt.NEGATIVE
+                        previousAttempt = PreviousAttempt.POSITIVE
                     ),
                     Question(
                         question = "What type of engine is commonly used in hybrid cars?",
@@ -165,7 +165,29 @@ object FileUtils {
                         previousAttempt = PreviousAttempt.POSITIVE
                     )
                 )
-            )))
+            ),
+                Topic(
+                    name = "HISTORY",
+                    questions = listOf(
+                        Question(
+                            question = "In which year did World War I begin?",
+                            answer = "1914",
+                            points = 20,
+                            previousAttempt = PreviousAttempt.POSITIVE
+                        ),
+                        Question(
+                            question = "Who was the first president of the United States?",
+                            answer = "George Washington",
+                            points = 25,
+                            previousAttempt = PreviousAttempt.NEGATIVE
+                        ),
+                        Question(
+                            question = "Who was the first female president of the United States?",
+                            answer = "Hillary Clinton",
+                            points = 30,
+                            previousAttempt = PreviousAttempt.RETRY
+                        )))
+            ))
             return
         }
 

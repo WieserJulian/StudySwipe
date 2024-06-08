@@ -18,10 +18,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.studyswipe.R
 import com.example.studyswipe.app.PreviousAttempt
 import com.example.studyswipe.app.Question
+import com.example.studyswipe.app.Topic
 import com.example.studyswipe.app.TopicLibrary
 import com.example.studyswipe.app.User
 import com.example.studyswipe.databinding.FragmentSwipeCardBinding
-import com.example.studyswipe.ui.home.HomeViewModel
 import com.example.studyswipe.utils.Constants
 
 class SwipeCardFragment : Fragment() {
@@ -29,7 +29,8 @@ class SwipeCardFragment : Fragment() {
     private var hasMoved: Boolean = false
     private var hasFlipped: Boolean = false
     private lateinit var swipeCardViewModel: SwipeCardViewModel;
-    private var activeQuestion: Question = Question("", "", 0)
+    private lateinit var activeTopic: Topic;
+    private lateinit var activeQuestion: Question;
     private var state: PreviousAttempt? = null
     private var topicName: String = ""
 
@@ -47,8 +48,6 @@ class SwipeCardFragment : Fragment() {
 
         swipeCardViewModel =
             ViewModelProvider(this)[SwipeCardViewModel::class.java]
-        val homeViewModel =
-            ViewModelProvider(this)[HomeViewModel::class.java]
 
         val root: View = binding.root
         topicName = arguments?.getString("topic") ?: ""
@@ -56,7 +55,8 @@ class SwipeCardFragment : Fragment() {
             arguments?.getString("questionType") ?: PreviousAttempt.POSITIVE.toString()
         )
         Log.d("SwipeCardFragment", "Topic name: $topicName Question type: $questionType")
-        var questions = homeViewModel.getQuestion(topicName)
+        activeTopic = TopicLibrary.getTopic(topicName)
+        var questions = activeTopic.questions
         when (questionType) {
             PreviousAttempt.RETRY -> questions =
                 questions.filter { it.previousAttempt == PreviousAttempt.NEGATIVE || it.previousAttempt == PreviousAttempt.RETRY }

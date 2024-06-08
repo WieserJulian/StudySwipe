@@ -6,8 +6,7 @@ object User {
     var negativeCounter: Int = 0
     var retryCounter: Int = 0
     var points: Double = 0.0
-
-
+    var lastTopic: String = ""
     fun applyQuestionResults(allQuestion: List<Question>) {
         positiveCounter += allQuestion.filter { it.previousAttempt == PreviousAttempt.POSITIVE }.size
         negativeCounter += allQuestion.filter { it.previousAttempt == PreviousAttempt.NEGATIVE }.size

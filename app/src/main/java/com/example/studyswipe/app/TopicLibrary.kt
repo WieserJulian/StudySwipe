@@ -19,6 +19,10 @@ object TopicLibrary {
         topics.remove(topic)
     }
 
+    fun getRandomTopic(): String {
+        return topics.random().name
+    }
+
     fun updateQuestions(topicName: String, allQuestion: List<Question>) {
         val topic = getTopic(topicName)
         removeTopic(topic)
