@@ -20,7 +20,7 @@ class EditQuestionFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private val question = Question("","", 0)
+    private val question = Question("","", 0)k
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
