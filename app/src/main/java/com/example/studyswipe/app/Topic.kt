@@ -2,5 +2,8 @@ package com.example.studyswipe.app
 
 data class Topic(
     val name: String,
-    val questions: List<Question>
+    var questions: List<Question>,
+    var isNew: Boolean = false,
+    var isFavorite: Boolean = false,
+    var swiped: Int = 0
 )

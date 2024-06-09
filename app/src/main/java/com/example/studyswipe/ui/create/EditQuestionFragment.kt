@@ -25,7 +25,7 @@ class EditQuestionFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         println("EditQuestionFragment onCreate: $param")
-        println(arguments?.getInt("questionID"))
+        println(arguments?.getInt("questionIDChange Theme"))
     }
 
     override fun onCreateView(
