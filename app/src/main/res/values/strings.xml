@@ -11,6 +11,7 @@
     <!--    Home Card -->
     <string name="home_card_title">Home</string>
     <string name="lastTopic">Last Topic: \n %s</string>
+    <string name="searchTopics">Search Topics?</string>
 
     <!--    Hints -->
     <string name="hintCickToFlip">Click the card to Flip it and see the anwser</string>

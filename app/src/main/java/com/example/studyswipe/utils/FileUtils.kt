@@ -28,9 +28,9 @@ object FileUtils {
         val file = File(context.filesDir, FILE_NAME)
         if (!file.exists()) {
             // Return an empty list or default topics if the file doesn't exist
-            TopicLibrary.topics = ArrayList(listOf(Topic(
+            TopicLibrary.topics = ArrayList(listOf<Topic>(Topic(
                 name = "MATH",
-                questions = listOf(
+                questions = listOf<Question>(
                     Question(
                         question = "What is 5 + 7?",
                         answer = "12",

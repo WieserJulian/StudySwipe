@@ -7,14 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.studyswipe.app.QuestionAdapter
-import com.example.studyswipe.databinding.FragmentCreateTopicBinding
-import com.example.studyswipe.databinding.FragmentEditQuestionBinding
 import com.example.studyswipe.databinding.FragmentTopicCardBinding
-import com.example.studyswipe.databinding.FragmentTopicSelectBinding
-import com.example.studyswipe.ui.create.EditQuestionViewModel
 
 class TopicCardFragment : Fragment() {
 
