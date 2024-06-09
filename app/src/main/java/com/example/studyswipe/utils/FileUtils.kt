@@ -35,6 +35,7 @@ object FileUtils {
                         question = "What is 5 + 7?",
                         answer = "12",
                         points = 10,
+                        imagePath = "/data/data/com.example.studyswipe/files/Math.jpg",
                         previousAttempt = PreviousAttempt.POSITIVE
                     ),
                     Question(

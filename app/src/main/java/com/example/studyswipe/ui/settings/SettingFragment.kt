@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.studyswipe.app.TopicLibrary
 import com.example.studyswipe.databinding.FragmentSettingBinding
 
 class SettingFragment : Fragment() {
@@ -32,6 +34,9 @@ class SettingFragment : Fragment() {
         settingsViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+
+        val imgView: ImageView = binding.imageView
+        imgView.setImageBitmap(TopicLibrary.topics.first().questions.first().getImageBitmap())
         return root
     }
 
