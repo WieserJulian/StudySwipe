@@ -18,7 +18,22 @@ object TopicLibrary {
         isFavorite: Boolean = false,
         swiped: Int = 0
     ) {
-        topics += Topic(topicName, questions, isNew, isFavorite, swiped)
+        val name: String
+
+        if (topics.any { t -> t.name.equals(topicName) }) {
+            name = getUniqueTopicName(topicName)
+        } else {
+            name = topicName
+        }
+
+        topics += Topic(name, questions, isNew, isFavorite, swiped)
+    }
+
+    private fun getUniqueTopicName(topicName: String, cnt: Int = 1): String {
+        if (topics.any { t -> t.name.equals(topicName+"_"+cnt) }) {
+            return getUniqueTopicName(topicName, cnt+1)
+        }
+        return topicName+"_"+cnt
     }
 
     fun removeTopic(topic: Topic) {
