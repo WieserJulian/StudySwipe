@@ -31,17 +31,17 @@
 <!-- Add/Edit -->
     <fragment
         android:id="@+id/navigation_add"
-        android:name="com.example.studyswipe.ui.add.AddFragment"
+        android:name="com.example.studyswipe.ui.addedit.AddFragment"
         android:label="@string/title_add"
         tools:layout="@layout/fragment_add">
         <action
-            android:id="@+id/action_navigation_add_to_createTopicFragment"
+            android:id="@+id/action_navigation_add_to_editTopicFragment"
             app:destination="@id/createTopicFragment" />
     </fragment>
   
     <fragment
         android:id="@+id/createTopicFragment"
-        android:name="com.example.studyswipe.ui.create.CreateTopicFragment"
+        android:name="com.example.studyswipe.ui.addedit.EditTopicFragment"
         android:label="CreateTopicFragment" >
         <action
             android:id="@+id/action_createTopicFragment_to_navigation_add"

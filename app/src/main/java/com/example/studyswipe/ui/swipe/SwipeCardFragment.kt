@@ -77,7 +77,6 @@ class SwipeCardFragment : Fragment() {
         return root
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -89,7 +88,11 @@ class SwipeCardFragment : Fragment() {
                 flipCard(activeQuestion.answer)
             }
         }
+        handleSwipe()
+    }
 
+    @SuppressLint("ClickableViewAccessibility")
+    private fun handleSwipe() {
         cardView.setOnTouchListener(
             View.OnTouchListener { v, event ->
                 if (!hasFlipped) {
@@ -122,7 +125,7 @@ class SwipeCardFragment : Fragment() {
                     MotionEvent.ACTION_UP -> {
                         hasMoved = false
                         if (!swipeCardViewModel.hasNewQuestion() && state != null) {
-                           handleFinishedQuestions()
+                            handleFinishedQuestions()
                         } else {
                             cardView.animate()
                                 .x(cardStart)

@@ -1,11 +1,9 @@
-package com.example.studyswipe.ui.add
+package com.example.studyswipe.ui.addedit
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
@@ -65,7 +63,7 @@ class AddFragment : Fragment(), TopicCardFragment.OnTopicCardClickListener {
         displayTopics(displayTopics)
 
         btnAddTopic.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_add_to_createTopicFragment)
+            findNavController().navigate(R.id.action_navigation_add_to_editTopicFragment)
         }
 
         return root
@@ -84,7 +82,9 @@ class AddFragment : Fragment(), TopicCardFragment.OnTopicCardClickListener {
 
 
     private fun openEditQuestionHandler(topicName: String) {
-
+        val bundle = Bundle()
+        bundle.putString("topicName", topicName)
+        findNavController().navigate(R.id.action_navigation_add_to_editTopicFragment, bundle)
     }
 
     private fun displayTopics(displayTopics: List<String>) {

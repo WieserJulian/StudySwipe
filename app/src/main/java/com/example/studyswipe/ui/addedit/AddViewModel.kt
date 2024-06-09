@@ -1,4 +1,4 @@
-package com.example.studyswipe.ui.add
+package com.example.studyswipe.ui.addedit
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.cli.jvm.main
+import org.jetbrains.kotlin.gradle.plugin.KotlinTargetHierarchy.SourceSetTree.Companion.main
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -38,6 +41,7 @@ android {
         viewBinding = true
     }
 }
+
 
 dependencies {
     implementation("com.google.code.gson:gson:2.10.1")

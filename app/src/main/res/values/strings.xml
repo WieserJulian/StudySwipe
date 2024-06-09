@@ -21,5 +21,9 @@
     <string name="place_holder">PLACE_HOLDER_SO_IDE_DONT_CRY</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="preview">Preview</string>
+    <string name="editMode">Edit Mode</string>
+    <string name="previewMode">Preview Mode</string>
+    <string name="enter_topic_name">Enter topic name</string>
 
 </resources>
