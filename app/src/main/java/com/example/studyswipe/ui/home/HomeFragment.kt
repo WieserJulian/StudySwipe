@@ -13,14 +13,19 @@ import com.example.studyswipe.app.PreviousAttempt
 import com.example.studyswipe.app.TopicLibrary
 import com.example.studyswipe.app.User
 import com.example.studyswipe.databinding.FragmentHomeBinding
+import com.example.studyswipe.ui.topic.TopicSelectFragment
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), TopicSelectFragment.OnTopicSelectClickListener {
 
     private var _binding: FragmentHomeBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    override fun onTopicSelectClick(topicName: String) {
+        openQuestionsHandler(topicName)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

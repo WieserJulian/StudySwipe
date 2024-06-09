@@ -31,7 +31,6 @@ class CreateTopicFragment : Fragment() {
     private val binding get() = _binding!!
     private val questions = mutableListOf<EditQuestionFragment>()
     private lateinit var questionAdapter: QuestionAdapter
-    private var counter: Int = 0
 
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreateView(
@@ -54,7 +53,6 @@ class CreateTopicFragment : Fragment() {
             println("Add new question")
             // Add a new EditQuestionFragment to the list
             questions.add(EditQuestionFragment())
-            counter += 1
 
             // Notify the adapter that the data set has changed
             questionAdapter.notifyItemInserted(questions.size - 1)
