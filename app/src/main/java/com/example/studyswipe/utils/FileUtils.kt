@@ -12,11 +12,11 @@ import java.io.File
 
 object FileUtils {
     private const val FILE_NAME = "StudySwipeSave.json"
+    private val gson = Gson()
 
     data class DataWrapper(val user: User, val topics: ArrayList<Topic>)
 
     fun saveAsJson(context: Context) {
-        val gson = Gson()
         val dataWrapper = DataWrapper(User, TopicLibrary.topics)
         val jsonString = gson.toJson(dataWrapper)
 
@@ -192,7 +192,6 @@ object FileUtils {
         }
 
         val jsonString = file.readText()
-        val gson = Gson()
         val type = object : TypeToken<DataWrapper>() {}.type
         val dataWrapper: DataWrapper = gson.fromJson(jsonString, type)
 
@@ -202,6 +201,26 @@ object FileUtils {
         User.points = dataWrapper.user.points
 
         TopicLibrary.topics = dataWrapper.topics
+    }
+
+    fun exportTopics(context: Context, topic: ArrayList<Topic>) {
+        val jsonString = gson.toJson(topic)
+
+        val file = File(context.filesDir, "export.json")
+        file.writeText(jsonString)
+    }
+
+    fun importTopics(context: Context, fileName: String) {
+        val file = File(context.filesDir, fileName)
+        if (!file.exists()) return
+
+        val jsonString = file.readText()
+        val type = object : TypeToken<ArrayList<Topic>>() {}.type
+        val importedTopics: ArrayList<Topic> = gson.fromJson(jsonString, type)
+
+        for (topic in importedTopics) {
+            TopicLibrary.addTopic(topic.name, topic.questions)
+        }
     }
 }
 
