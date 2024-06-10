@@ -7,7 +7,7 @@ object User {
     var retryCounter: Int = 0
     var points: Double = 0.0
     var lastTopic: String = ""
-    fun applyQuestionResults(allQuestion: List<Question>) {
+    fun applyQuestionResults(topicName: String, allQuestion: List<Question>) {
         positiveCounter += allQuestion.filter { it.previousAttempt == PreviousAttempt.POSITIVE }.size
         negativeCounter += allQuestion.filter { it.previousAttempt == PreviousAttempt.NEGATIVE }.size
         retryCounter += allQuestion.filter { it.previousAttempt == PreviousAttempt.RETRY }.size
@@ -16,5 +16,6 @@ object User {
         var retryPoints = allQuestion.filter { it.previousAttempt == PreviousAttempt.RETRY }.sumOf { it.points.toInt() / 2 }
         points += positivePoints - negativePoints - retryPoints
         points = points.coerceAtLeast(0.0)
+        lastTopic = topicName
     }
 }

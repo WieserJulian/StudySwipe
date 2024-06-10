@@ -1,16 +1,10 @@
 package com.example.studyswipe.ui.swipe
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.ObjectAnimator
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -22,15 +16,16 @@ import com.example.studyswipe.app.Topic
 import com.example.studyswipe.app.TopicLibrary
 import com.example.studyswipe.app.User
 import com.example.studyswipe.databinding.FragmentSwipeCardBinding
+import com.example.studyswipe.ui.card.CardFragment
 import com.example.studyswipe.utils.Constants
 
-class SwipeCardFragment : Fragment() {
-    private lateinit var cardView: CardView
+class SwipeCardFragment : Fragment(), CardFragment.OnCardListener {
+
     private var hasMoved: Boolean = false
     private var hasFlipped: Boolean = false
-    private lateinit var swipeCardViewModel: SwipeCardViewModel;
-    private lateinit var activeTopic: Topic;
-    private lateinit var activeQuestion: Question;
+    private lateinit var swipeCardViewModel: SwipeCardViewModel
+    private lateinit var activeTopic: Topic
+    private lateinit var activeQuestion: Question
     private var state: PreviousAttempt? = null
     private var topicName: String = ""
 
@@ -39,6 +34,59 @@ class SwipeCardFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var swipeCardFragment: CardFragment
+
+
+    override fun onCardClick() {
+        if (!hasFlipped) {
+            hasFlipped = true
+            swipeCardFragment.flipCard(activeQuestion.answer)
+        }
+    }
+
+    override fun getQuestion(): Question {
+        return activeQuestion
+    }
+
+    override fun shouldFlipCorner(): Boolean {
+        return true
+    }
+
+    override fun preventSwipe() {
+
+    }
+
+    override fun swipeHandling(x: Float, cardStart: Float) {
+        if (x < -Constants.MIN_SWIPE_DISTANCE && !hasMoved && state != PreviousAttempt.POSITIVE) {
+            Log.d("SwipeCardFragment", "Swiped left")
+            state = PreviousAttempt.POSITIVE
+
+        } else if (x - cardStart > Constants.MIN_SWIPE_DISTANCE && state != PreviousAttempt.NEGATIVE) {
+            Log.d("SwipeCardFragment", "Swiped right")
+            state = PreviousAttempt.NEGATIVE
+        }
+    }
+
+    override fun endSwipe(cView: CardView, cardStart: Float) {
+        hasMoved = false
+        if (!swipeCardViewModel.hasNewQuestion() && state != null) {
+            handleFinishedQuestions(cView)
+        } else {
+            cView.animate()
+                .x(cardStart)
+                .setDuration(20)
+                .start()
+
+            if (state != null) {
+                safeAnswer(state!!)
+                loadNextQuestion()
+            }
+        }
+    }
+
+    override fun enableSwipe(): Boolean {
+        return true
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +102,6 @@ class SwipeCardFragment : Fragment() {
         val questionType = PreviousAttempt.valueOf(
             arguments?.getString("questionType") ?: PreviousAttempt.POSITIVE.toString()
         )
-        Log.d("SwipeCardFragment", "Topic name: $topicName Question type: $questionType")
         activeTopic = TopicLibrary.getTopic(topicName)
         var questions = activeTopic.questions
         when (questionType) {
@@ -67,85 +114,20 @@ class SwipeCardFragment : Fragment() {
             PreviousAttempt.POSITIVE -> {}
         }
         swipeCardViewModel.setAllQuestion(questions)
-
         binding.topicName.text = topicName
-        binding.swapImage.animate().alpha(1f).start()
-        binding.questionPoints.animate().alpha(0f).start()
         activeQuestion = swipeCardViewModel.getNextQuestion()
-        binding.questionText.text = activeQuestion.question
-        binding.questionPoints.text = activeQuestion.points.toString()
+
+
+        swipeCardFragment = CardFragment()
+        childFragmentManager.beginTransaction()
+            .add(binding.questionOutlet.id, swipeCardFragment)
+            .commit()
         return root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        cardView = view.findViewById(R.id.card_view)
-
-        cardView.setOnClickListener {
-            if (!hasFlipped) {
-                hasFlipped = true
-                flipCard(activeQuestion.answer)
-            }
-        }
-        handleSwipe()
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private fun handleSwipe() {
-        cardView.setOnTouchListener(
-            View.OnTouchListener { v, event ->
-                if (!hasFlipped) {
-                    return@OnTouchListener false
-                }
-                // variables to store current configuration of quote card.
-                val displayMetrics = resources.displayMetrics
-                val cardWidth = cardView.width
-                val cardStart = (displayMetrics.widthPixels.toFloat() / 2) - (cardWidth / 2)
-
-                when (event.action) {
-                    MotionEvent.ACTION_MOVE -> {
-                        // get the new co-ordinate of X-axis
-                        val newX = event.rawX - (cardWidth / 2)
-                        cardView.animate()
-                            .x(newX)
-                            .setDuration(0)
-                            .start()
-                        if (cardView.x < -Constants.MIN_SWIPE_DISTANCE && !hasMoved && state != PreviousAttempt.POSITIVE) {
-                            Log.d("SwipeCardFragment", "Swiped left")
-                            state = PreviousAttempt.POSITIVE
-
-                        } else if (cardView.x - cardStart > Constants.MIN_SWIPE_DISTANCE && state != PreviousAttempt.NEGATIVE) {
-                            Log.d("SwipeCardFragment", "Swiped right")
-                            state = PreviousAttempt.NEGATIVE
-                        }
-
-                    }
-
-                    MotionEvent.ACTION_UP -> {
-                        hasMoved = false
-                        if (!swipeCardViewModel.hasNewQuestion() && state != null) {
-                            handleFinishedQuestions()
-                        } else {
-                            cardView.animate()
-                                .x(cardStart)
-                                .setDuration(20)
-                                .start()
-                            if (state != null) {
-                                safeAnswer(state!!)
-                                loadNextQuestion()
-                            }
-                        }
-                    }
-
-                }
-                v.performClick()
-                return@OnTouchListener true
-            })
-    }
-
-    private fun handleFinishedQuestions() {
-        cardView.animate().alpha(0f).start()
+    private fun handleFinishedQuestions(cView: CardView) {
+        cView.animate().alpha(0f).start()
         safeAnswer(state!!)
         Log.d("SwipeCardFragment", "No more questions")
         val allQuestion = swipeCardViewModel.getDoneQuestion()
@@ -161,17 +143,11 @@ class SwipeCardFragment : Fragment() {
             "SwipeCardFragment",
             "Retry: ${allQuestion.filter { it.previousAttempt == PreviousAttempt.RETRY }}"
         )
-        User.applyQuestionResults(allQuestion)
+        User.applyQuestionResults(topicName, allQuestion)
         TopicLibrary.updateQuestions(topicName, allQuestion)
         findNavController().navigate(R.id.navigation_home)
     }
 
-    private fun flipCorner() {
-        val alS = if (binding.swapImage.alpha == 0f) 1f else 0f
-        val alQ = if (binding.questionPoints.alpha == 0f) 1f else 0f
-        binding.swapImage.alpha = alS
-        binding.questionPoints.alpha = alQ
-    }
 
     private fun safeAnswer(state: PreviousAttempt) {
         when (state) {
@@ -197,34 +173,12 @@ class SwipeCardFragment : Fragment() {
         }
         state = null
         activeQuestion = swipeCardViewModel.getNextQuestion()
-        binding.swapImage.alpha = 1f
-        binding.questionPoints.alpha = 0f
-        binding.questionText.text = activeQuestion.question
-        binding.questionPoints.text = activeQuestion.points.toString()
-        cardView.alpha = 0f // Set initial alpha to 0
-        cardView.animate().alpha(1f).setDuration(100).withEndAction {
+        swipeCardFragment.resetCard()
+        swipeCardFragment.loadNextQuestion()
+        swipeCardFragment.requireView().animate().setDuration(100).withEndAction {
             hasFlipped = false
         }.start()
     }
 
 
-    private fun flipCard(text: String) {
-        val oa1 = ObjectAnimator.ofFloat(cardView, "scaleX", 1f, 0f)
-        val oa2 = ObjectAnimator.ofFloat(cardView, "scaleX", 0f, 1f)
-
-        oa1.interpolator = AccelerateDecelerateInterpolator()
-        oa2.interpolator = AccelerateDecelerateInterpolator()
-
-        oa1.duration = 125
-        oa2.duration = 125
-
-        oa1.addListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator) {
-                flipCorner()
-                binding.questionText.text = text
-                oa2.start()
-            }
-        })
-        oa1.start()
-    }
 }

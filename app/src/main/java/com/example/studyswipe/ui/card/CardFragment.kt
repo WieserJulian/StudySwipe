@@ -3,15 +3,17 @@ package com.example.studyswipe.ui.card
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
-import com.example.studyswipe.R
+import com.example.studyswipe.app.Question
 import com.example.studyswipe.databinding.FragmentCardBinding
 
 class CardFragment : Fragment() {
@@ -22,14 +24,19 @@ class CardFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-    private var onCardListener: CardFragment.OnCardListener? = null
-    private var showingFront = true
+    private var onCardListener: OnCardListener? = null
 
     interface OnCardListener {
         fun onCardClick()
-        fun getQuestionText(): String
-        fun getAnswerText(): String
+        fun getQuestion(): Question
         fun shouldFlipCorner(): Boolean
+        fun endSwipe(cView: CardView, cardStart: Float)
+        fun preventSwipe()
+        fun swipeHandling(x: Float, cardStart: Float)
+
+        fun enableSwipe(): Boolean {
+            return false
+        }
     }
 
 
@@ -39,9 +46,10 @@ class CardFragment : Fragment() {
     ): View {
         _binding = FragmentCardBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.questionText.text = onCardListener?.getQuestionText()
+        binding.questionText.text = onCardListener?.getQuestion()?.question
         binding.swapImage.alpha = 1f
         binding.questionPoints.alpha = 0f
+        cardView = binding.cardView
         return root
     }
 
@@ -49,10 +57,11 @@ class CardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        cardView = view.findViewById(R.id.card_view)
-
         cardView.setOnClickListener {
             onCardListener?.onCardClick()
+        }
+        if (onCardListener?.enableSwipe() == true) {
+            handleSwipe()
         }
 
     }
@@ -64,6 +73,41 @@ class CardFragment : Fragment() {
             context is OnCardListener -> context
             else -> context as OnCardListener
         }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun handleSwipe() {
+        cardView.setOnTouchListener(
+            View.OnTouchListener { v, event ->
+                onCardListener?.preventSwipe()
+                // variables to store current configuration of quote card.
+                val displayMetrics = resources.displayMetrics
+                val cardWidth = cardView.width
+                val cardStart = (displayMetrics.widthPixels - cardWidth) / 2f
+
+                when (event.action) {
+                    MotionEvent.ACTION_MOVE -> {
+                        // get the new co-ordinate of X-axis
+                        val newX = event.rawX - (cardWidth / 2)
+                        cardView.animate()
+                            .x(newX)
+                            .setDuration(0)
+                            .start()
+                        onCardListener?.swipeHandling(cardView.x, cardStart)
+
+
+                    }
+
+                    MotionEvent.ACTION_UP -> {
+                        onCardListener?.endSwipe(cardView, cardStart)
+
+
+                    }
+
+                }
+                v.performClick()
+                return@OnTouchListener true
+            })
     }
 
     fun flipCard(text: String) {
@@ -85,6 +129,20 @@ class CardFragment : Fragment() {
         })
         oa1.start()
     }
+
+
+    fun resetCard() {
+        binding.swapImage.alpha = 1f
+        binding.questionPoints.alpha = 0f
+        binding.questionText.text = onCardListener!!.getQuestion().question
+        binding.questionPoints.text = onCardListener!!.getQuestion().points.toString()
+    }
+
+    fun loadNextQuestion() {
+        cardView.alpha = 0f // Set initial alpha to 0
+        cardView.animate().alpha(1f).setDuration(100).start()
+    }
+
     private fun flipCorner() {
         if (onCardListener?.shouldFlipCorner() == false) {
             return

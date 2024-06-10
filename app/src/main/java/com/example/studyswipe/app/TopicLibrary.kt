@@ -40,7 +40,7 @@ object TopicLibrary {
         var topicsToDisplay = mutableSetOf<String>()
         val favoriteTopics = topics.filter { it.isFavorite }.take(displayTopics)
         if (favoriteTopics.size == displayTopics) {
-            return favoriteTopics.map { it.name };
+            return favoriteTopics.map { it.name }
         }
         topicsToDisplay.addAll(favoriteTopics.map { it.name })
         val newTopics =

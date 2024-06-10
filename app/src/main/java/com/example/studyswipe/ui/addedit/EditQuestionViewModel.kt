@@ -18,7 +18,7 @@ class EditQuestionViewModel : ViewModel() {
     }
 
     fun addQuestion(id: String, q: Question) {
-        mutableSelectedItem.value?.set(id, q);
+        mutableSelectedItem.value?.set(id, q)
     }
 
     fun getQuestion(id: String): Question? {

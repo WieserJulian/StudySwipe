@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.studyswipe.app.Question
@@ -28,7 +29,7 @@ class EditQuestionFragment : Fragment(), CardFragment.OnCardListener {
         println("EditQuestionFragment onCardClick")
         if (editViewModel.isInPreviewMode.value == false) {
             if (!showingFront) {
-                binding.cardFragment.getFragment<CardFragment>().flipCard(question.question)
+                binding.editQuestionCardFragment.getFragment<CardFragment>().flipCard(question.question)
                 showingFront = true
             }
             // TODO Edit the question
@@ -38,20 +39,25 @@ class EditQuestionFragment : Fragment(), CardFragment.OnCardListener {
                 .show()
             return
         }
-        binding.cardFragment.getFragment<CardFragment>().flipCard(if (showingFront) question.question else question.answer)
+        binding.editQuestionCardFragment.getFragment<CardFragment>().flipCard(if (showingFront) question.question else question.answer)
         showingFront = !showingFront
     }
 
-    override fun getQuestionText(): String {
-        return question.question
-    }
-
-    override fun getAnswerText(): String{
-        return question.answer
+    override fun getQuestion(): Question {
+        return question
     }
 
     override fun shouldFlipCorner(): Boolean {
         return false
+    }
+
+    override fun endSwipe(cView: CardView, cardStart: Float) {
+    }
+
+    override fun preventSwipe() {
+    }
+
+    override fun swipeHandling(x: Float, cardStart: Float) {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

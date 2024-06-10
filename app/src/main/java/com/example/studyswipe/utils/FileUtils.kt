@@ -200,6 +200,7 @@ object FileUtils {
         User.negativeCounter = dataWrapper.user.negativeCounter
         User.retryCounter = dataWrapper.user.retryCounter
         User.points = dataWrapper.user.points
+        User.lastTopic = dataWrapper.user.lastTopic
 
         TopicLibrary.topics = dataWrapper.topics
     }
