@@ -8,6 +8,9 @@ object TopicLibrary {
     }
 
     fun getTopic(topicName: String): Topic {
+        if (!exists(topicName)) {
+            return Topic("", listOf())
+        }
         return topics.filter { it.name == topicName }.first()
     }
 
@@ -21,18 +24,24 @@ object TopicLibrary {
         topics += Topic(topicName, questions, isNew, isFavorite, swiped)
     }
 
+    fun exists(topicName: String): Boolean {
+        return topics.any { it.name == topicName }
+    }
+
     fun removeTopic(topic: Topic) {
         topics.remove(topic)
     }
 
-    fun getRandomTopic(): String {
-        return topics.random().name
-    }
 
     fun updateQuestions(topicName: String, allQuestion: List<Question>) {
-        val topic = getTopic(topicName)
-        removeTopic(topic)
-        addTopic(topicName, allQuestion, topic.isNew, topic.isFavorite, topic.swiped + 1)
+        if (exists(topicName)) {
+            val topic = getTopic(topicName)
+            removeTopic(topic)
+            addTopic(topicName, allQuestion, topic.isNew, topic.isFavorite, topic.swiped + 1)
+            return
+        }
+        addTopic(topicName, allQuestion)
+
 
     }
 
@@ -55,6 +64,10 @@ object TopicLibrary {
         topicsToDisplay.addAll(otherTopics.map { it.name })
         return topicsToDisplay.toList()
 
+    }
+
+    fun deleteTopic(topicName: String) {
+        topics.removeIf { it.name == topicName }
     }
 
 }

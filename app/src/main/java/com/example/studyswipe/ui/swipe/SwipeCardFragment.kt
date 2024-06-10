@@ -145,6 +145,7 @@ class SwipeCardFragment : Fragment(), CardFragment.OnCardListener {
         )
         User.applyQuestionResults(topicName, allQuestion)
         TopicLibrary.updateQuestions(topicName, allQuestion)
+        this.context?.let { it1 -> com.example.studyswipe.utils.FileUtils.saveAsJson(it1) }
         findNavController().navigate(R.id.navigation_home)
     }
 

@@ -6,43 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".ui.addedit.AddFragment">
 
-    <AutoCompleteTextView
-        android:id="@+id/searchTopics"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="@string/searchTopics"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="vertical"
+    <Button
+        android:id="@+id/btn_edit_topic"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="100dp"
+        android:text="Edit Topic"
         app:layout_constraintBottom_toTopOf="@+id/btn_add_topic"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchTopics">
-
-        <LinearLayout
-            android:id="@+id/displayTopics"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical" />
-    </ScrollView>
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_add_topic"
         android:layout_width="200dp"
         android:layout_height="100dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="200dp"
         android:text="Add Topic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

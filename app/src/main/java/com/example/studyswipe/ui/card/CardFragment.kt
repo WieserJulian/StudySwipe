@@ -29,10 +29,12 @@ class CardFragment : Fragment() {
     interface OnCardListener {
         fun onCardClick()
         fun getQuestion(): Question
-        fun shouldFlipCorner(): Boolean
-        fun endSwipe(cView: CardView, cardStart: Float)
-        fun preventSwipe()
-        fun swipeHandling(x: Float, cardStart: Float)
+        fun shouldFlipCorner(): Boolean {
+            return false
+        }
+        fun endSwipe(cView: CardView, cardStart: Float) {}
+        fun preventSwipe() {}
+        fun swipeHandling(x: Float, cardStart: Float) {}
 
         fun enableSwipe(): Boolean {
             return false

@@ -2,6 +2,8 @@ package com.example.studyswipe.ui.addedit
 
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -41,20 +43,41 @@ class EditTopicFragment : Fragment() {
         _binding = FragmentCreateTopicBinding.inflate(inflater, container, false)
         val root: View = binding.root
         topicName = arguments?.getString("topicName") ?: ""
-        if (topicName == "") {
+        if (topicName.isEmpty()) {
+
+            dialogView.requireViewById<EditText>(R.id.dialogTopicNameEditText).addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                    val input = s.toString()
+                    if (TopicLibrary.exists(input)) {
+                        editTextTopicName.error = "Topic already exists"
+                    }
+                }
+
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    // No action needed here
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    // No action needed here
+                }
+            })
+
             AlertDialog.Builder(requireContext())
                 .setTitle("Set Topic Name")
                 .setView(dialogView)
                 .setPositiveButton("OK") { _, _ ->
                     topicName = editTextTopicName.text.toString()
                     binding.topicName.text = topicName
+                    initView()
                 }
                 .setNegativeButton("Cancel", null)
                 .show()
 
+        } else {
+            initView()
         }
-        binding.topicName.text = topicName
-        displayQuestions(TopicLibrary.getTopic(topicName).questions)
+        Log.d("EditTopicFragment", "Topic name: $topicName ${topicName.isEmpty()}")
+
 
         binding.switch1.setOnCheckedChangeListener { buttonView, isChecked ->
             editViewModel.setPreviewMode(!isChecked)
@@ -66,38 +89,43 @@ class EditTopicFragment : Fragment() {
         }
 
         binding.btnaddNewquestion.setOnClickListener {
-            var questions = editViewModel.getAllQuestions()
-            // TODO add Edit Dialog here and the finished question add to list
-            questions.add(Question("", "", 0))
-            displayQuestions(questions)
+            val uuid: String = UUID.randomUUID().toString()
+            val newQuestion = Question("New Question", "New Anwser", 1)
+            editViewModel.addQuestion(uuid, newQuestion)
+            displayQuestions(editViewModel.getAllQuestionsUuid())
         }
 
         binding.btnsaveTopic.setOnClickListener {
-            val questions = editViewModel.getAllQuestions()
+            val questions = editViewModel.getAllQuestionsUuid()
             if (questions.isNotEmpty()) {
-                val listQuestion: List<Question> = editViewModel.getAllQuestions()
-                for (question in listQuestion) {
-                    Log.d("CreateTopicFragment", question.question)
-                }
-                TopicLibrary.addTopic(binding.topicName.text.toString(), listQuestion)
+                TopicLibrary.updateQuestions(topicName, editViewModel.getAllQuestions())
                 this.context?.let { it1 -> com.example.studyswipe.utils.FileUtils.saveAsJson(it1) }
             }
             findNavController().navigate(R.id.action_createTopicFragment_to_navigation_add)
         }
-
-
         return root
     }
 
-    private fun displayQuestions(displayQuestions: List<Question>) {
+    private fun initView(){
+        binding.topicName.text = topicName
+        if (TopicLibrary.exists(topicName)) {
+            editViewModel.addQuestions(TopicLibrary.getTopic(topicName).questions)
+        } else {
+            editViewModel.addQuestions(listOf(Question("New Question", "New Anwser", 1)))
+        }
+        displayQuestions(editViewModel.getAllQuestionsUuid())
+    }
+
+    fun displayQuestions(displayQuestions: List<Pair<String, Question>>) {
 
         childFragmentManager.fragments.forEach {
             childFragmentManager.beginTransaction().remove(it).commit()
         }
-        for (question in displayQuestions) {
+        for (pair in displayQuestions) {
+            val uuid = pair.first
+            val question = pair.second
             val topicCardFragment = EditQuestionFragment()
             val args = Bundle()
-            val uuid: String = UUID.randomUUID().toString()
             editViewModel.addQuestion(uuid, question)
             args.putString("questionUID", uuid)
             topicCardFragment.arguments = args
