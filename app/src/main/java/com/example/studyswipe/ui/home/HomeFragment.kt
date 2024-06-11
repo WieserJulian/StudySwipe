@@ -8,8 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.SimpleCursorAdapter
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.studyswipe.R
@@ -42,7 +40,6 @@ class HomeFragment : Fragment(), TopicCardFragment.OnTopicCardClickListener {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
         Log.d("HomeFragment", "Users Last Topic: ${User.lastTopic}")
-        User.lastTopic = listOf("MATH", "CARS", "HISTORY")[2]  // TODO Remove only for test purpose
         if (User.lastTopic.isEmpty()) {
             binding.btnLastTopic.visibility = View.GONE
         } else {
@@ -81,7 +78,7 @@ class HomeFragment : Fragment(), TopicCardFragment.OnTopicCardClickListener {
             displayTopics(displayTopics)
 
 
-        binding.btnLastTopic.setOnClickListener() {
+        binding.btnLastTopic.setOnClickListener {
             openQuestionsHandler(User.lastTopic)
         }
         return root

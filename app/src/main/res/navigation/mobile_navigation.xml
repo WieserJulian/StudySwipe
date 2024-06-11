@@ -5,15 +5,15 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/navigation_home">
 
-<!--  Home / Swipe  -->
+    <!--  Home / Swipe  -->
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.studyswipe.ui.home.HomeFragment"
         android:label="@string/home_card_title"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_navigation_swipe_card"
-            app:destination="@id/navigation_swipe_card" >
+            app:destination="@id/navigation_swipe_card">
             <argument
                 android:name="topic"
                 app:argType="string" />
@@ -22,40 +22,53 @@
                 app:argType="com.example.studyswipe.app.PreviousAttempt" />
         </action>
     </fragment>
-  
+
     <fragment
         android:id="@+id/navigation_swipe_card"
         android:name="com.example.studyswipe.ui.swipe.SwipeCardFragment"
         android:label="Swipe Card"
         tools:layout="@layout/fragment_swipe_card" />
-<!-- Add/Edit -->
+    <!-- Add/Edit -->
     <fragment
         android:id="@+id/navigation_add"
-        android:name="com.example.studyswipe.ui.add.AddFragment"
+        android:name="com.example.studyswipe.ui.addedit.AddFragment"
         android:label="@string/title_add"
         tools:layout="@layout/fragment_add">
         <action
-            android:id="@+id/action_navigation_add_to_createTopicFragment"
+            android:id="@+id/action_navigation_add_to_editTopicFragment"
             app:destination="@id/createTopicFragment" />
+        <action
+            android:id="@+id/action_navigation_add_to_navigation_edit"
+            app:destination="@id/navigation_edit" />
     </fragment>
-  
+
     <fragment
         android:id="@+id/createTopicFragment"
-        android:name="com.example.studyswipe.ui.create.CreateTopicFragment"
-        android:label="CreateTopicFragment" >
+        android:name="com.example.studyswipe.ui.addedit.EditTopicFragment"
+        android:label="CreateTopicFragment">
         <action
             android:id="@+id/action_createTopicFragment_to_navigation_add"
             app:destination="@id/navigation_add" />
     </fragment>
-  
-<!-- Statistic   -->
+
+    <fragment
+        android:id="@+id/navigation_edit"
+        android:name="com.example.studyswipe.ui.addedit.EditSelectTopicFragment"
+        android:label="@string/title_topic_select"
+        tools:layout="@layout/fragment_edit_topic_select">
+        <action
+            android:id="@+id/action_navigation_add_to_editTopicFragment"
+            app:destination="@id/createTopicFragment" />
+    </fragment>
+
+    <!-- Statistic   -->
 
     <fragment
         android:id="@+id/navigation_statistic"
         android:name="com.example.studyswipe.ui.statistics.StatisticFragment"
         android:label="@string/title_statistic"
         tools:layout="@layout/fragment_statistic" />
-<!--  Settings   -->
+    <!--  Settings   -->
 
     <fragment
         android:id="@+id/navigation_setting"
