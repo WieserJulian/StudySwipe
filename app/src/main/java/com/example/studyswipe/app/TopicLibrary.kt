@@ -1,5 +1,7 @@
 package com.example.studyswipe.app
 
+import java.io.File
+
 object TopicLibrary {
     var topics: ArrayList<Topic> = ArrayList()
 
@@ -83,6 +85,10 @@ object TopicLibrary {
 
     fun deleteTopic(topicName: String) {
         topics.removeIf { it.name == topicName }
+    }
+
+    fun import(file: File) {
+
     }
 
 }

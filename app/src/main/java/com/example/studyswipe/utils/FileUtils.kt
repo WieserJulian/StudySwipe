@@ -1,6 +1,9 @@
 package com.example.studyswipe.utils
 
 import android.content.Context
+import android.os.Environment
+import android.util.Log
+import android.webkit.MimeTypeMap
 import com.example.studyswipe.app.PreviousAttempt
 import com.example.studyswipe.app.Question
 import com.example.studyswipe.app.Topic
@@ -9,6 +12,8 @@ import com.example.studyswipe.app.User
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 object FileUtils {
     private const val FILE_NAME = "StudySwipeSave.json"
@@ -204,24 +209,47 @@ object FileUtils {
         TopicLibrary.topics = dataWrapper.topics
     }
 
-    fun exportTopics(context: Context, topic: ArrayList<Topic>) {
-        val jsonString = gson.toJson(topic)
+    fun exportTopics() {
+        val data = gson.toJson(TopicLibrary.topics)
 
-        val file = File(context.filesDir, "export.json")
-        file.writeText(jsonString)
+        val downloadsDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+        val file = File(downloadsDirectory, "EXPORT_STUDYSWIPE_TOPICS.expSS")
+            try {
+                val fos = FileOutputStream(file)
+                fos.write(data.toByteArray())
+                fos.close()
+            } catch (e: IOException) {
+                // Handle the exception
+                Log.e("TopicLibrary", "Error exporting topics", e)
+                e.printStackTrace()
+            }
     }
 
-    fun importTopics(context: Context, fileName: String) {
-        val file = File(context.filesDir, fileName)
-        if (!file.exists()) return
+    fun importTopics(file: File, context: Context) {
 
-        val jsonString = file.readText()
-        val type = object : TypeToken<ArrayList<Topic>>() {}.type
-        val importedTopics: ArrayList<Topic> = gson.fromJson(jsonString, type)
 
-        for (topic in importedTopics) {
-            TopicLibrary.addTopic(topic.name, topic.questions)
+        val extension = MimeTypeMap.getFileExtensionFromUrl(file.absolutePath)
+
+        if (extension != "expSS") {
+            // Show an error message
+            println("Invalid file type. Only .expSS files are allowed.")
+            return
         }
+
+        try {val jsonString = file.readText()
+            val type = object : TypeToken<ArrayList<Topic>>() {}.type
+            val importedTopics: ArrayList<Topic> = gson.fromJson(jsonString, type)
+            Log.d("FileUtils", "importedTopics: $importedTopics")
+            for (topic in importedTopics) {
+                TopicLibrary.addTopic(topic.name, topic.questions)
+            }
+            saveAsJson(context)
+        } catch (e: IOException) {
+            // Handle the exception
+            e.printStackTrace()
+        }
+
+
     }
 }
 

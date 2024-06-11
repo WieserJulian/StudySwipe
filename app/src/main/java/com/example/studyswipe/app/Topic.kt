@@ -6,4 +6,5 @@ data class Topic(
     var isNew: Boolean = false,
     var isFavorite: Boolean = false,
     var swiped: Int = 0
-)
+) {
+}
