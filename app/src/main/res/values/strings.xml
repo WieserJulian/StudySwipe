@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">StudySwipe</string>
-    <string name="title_add">Add</string>
+    <string name="title_add">Add/Edit</string>
     <string name="title_statistic">Statistics</string>
     <string name="title_setting">Settings</string>
     <string name="messages_header">StudySwipe</string>
@@ -19,7 +19,14 @@
     <string name="hintSwipeToRight">Swipe to the right if you incorrectly answer the question</string>
     <string name="hintSwipeToDown">Swipe down if you want to retry later this question</string>
     <string name="place_holder">PLACE_HOLDER_SO_IDE_DONT_CRY</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="preview">Preview</string>
+    <string name="editMode">Edit Mode</string>
+    <string name="previewMode">Preview Mode</string>
+    <string name="enter_topic_name">Enter topic name</string>
+    <string name="points_placeholder">0</string>
+    <string name="title_topic_select">Edit Topic select\n</string>
+    <string name="editTopics">Edit Topics</string>
+    <string name="deleteTopics">Delete Topics</string>
 
 </resources>

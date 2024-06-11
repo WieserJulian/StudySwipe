@@ -28,7 +28,7 @@ class QuestionSelectDialogFragment : DialogFragment() {
                     .create()
             }
             val title = resources.getString(R.string.selectQuestionTitle, topic)
-            binding.selectDialogTitle.text = title;
+            binding.selectDialogTitle.text = title
             val currentTopic = TopicLibrary.getTopic(topic)
             if (currentTopic.questions.none{ it.previousAttempt == PreviousAttempt.RETRY }) {
                 binding.buttonRetryNegative.visibility = View.GONE
