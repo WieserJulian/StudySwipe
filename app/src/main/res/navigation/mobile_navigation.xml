@@ -83,11 +83,11 @@
         android:name="com.example.studyswipe.ui.statistics.StatisticFragment"
         android:label="@string/title_statistic"
         tools:layout="@layout/fragment_statistic" />
-    <!--  Settings   -->
 
+    <!-- Settings -->
     <fragment
-        android:id="@+id/navigation_setting"
-        android:name="com.example.studyswipe.ui.settings.SettingFragment"
+        android:id="@+id/navigation_settings_export"
+        android:name="com.example.studyswipe.ui.settings.SettingsFragment"
         android:label="@string/title_setting"
-        tools:layout="@layout/fragment_setting" />
+        tools:layout="@layout/fragment_export" />
 </navigation>

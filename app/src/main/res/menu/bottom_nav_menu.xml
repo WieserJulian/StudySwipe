@@ -15,9 +15,4 @@
         android:icon="@drawable/nav_statistic_24dp"
         android:title="@string/title_statistic" />
 
-    <item
-        android:id="@id/navigation_setting"
-        android:icon="@drawable/nav_setting_24dp"
-        android:title="@string/title_setting" />
-
 </menu>
