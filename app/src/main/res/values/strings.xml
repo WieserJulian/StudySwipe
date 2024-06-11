@@ -20,6 +20,7 @@
     <string name="hintSwipeToDown">Swipe down if you want to retry later this question</string>
     <string name="place_holder">PLACE_HOLDER_SO_IDE_DONT_CRY</string>
 
+    <string name="title_swipe_finished">Finished Topic</string>
     <string name="preview">Preview</string>
     <string name="editMode">Edit Mode</string>
     <string name="previewMode">Preview Mode</string>
@@ -28,5 +29,6 @@
     <string name="title_topic_select">Edit Topic select\n</string>
     <string name="editTopics">Edit Topics</string>
     <string name="deleteTopics">Delete Topics</string>
+    <string name="statistic_title">Overall Statistics</string>
 
 </resources>

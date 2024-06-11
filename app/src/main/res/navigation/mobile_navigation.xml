@@ -27,7 +27,22 @@
         android:id="@+id/navigation_swipe_card"
         android:name="com.example.studyswipe.ui.swipe.SwipeCardFragment"
         android:label="Swipe Card"
-        tools:layout="@layout/fragment_swipe_card" />
+        tools:layout="@layout/fragment_swipe_card">
+        <action
+            android:id="@+id/action_navigation_swipe_card_to_navigation_swipe_finished"
+            app:destination="@id/navigation_swipe_finished">
+            <argument
+                android:name="topic"
+                app:argType="string" />
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_swipe_finished"
+        android:name="com.example.studyswipe.ui.swipe.SwipeFinishedFragment"
+        android:label="@string/title_swipe_finished"
+        tools:layout="@layout/fragment_swipe_finished" />
     <!-- Add/Edit -->
     <fragment
         android:id="@+id/navigation_add"

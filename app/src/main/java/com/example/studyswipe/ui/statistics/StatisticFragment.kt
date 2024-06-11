@@ -1,13 +1,19 @@
 package com.example.studyswipe.ui.statistics
 
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import com.example.studyswipe.R
+import com.example.studyswipe.app.PreviousAttempt
+import com.example.studyswipe.app.User
 import com.example.studyswipe.databinding.FragmentStatisticBinding
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 
 class StatisticFragment : Fragment() {
 
@@ -22,16 +28,32 @@ class StatisticFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val statisticViewModel =
-            ViewModelProvider(this).get(StatisticViewModel::class.java)
-
         _binding = FragmentStatisticBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        statisticViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+        binding.textNotifications.text = getString(R.string.statistic_title)
+        val pieChart = binding.statisticPieChart
+
+
+        pieChart.getDescription().setEnabled(false)
+        pieChart.legend.isEnabled = false
+        pieChart.setUsePercentValues(true)
+        pieChart.setDrawHoleEnabled(false)
+
+        val categories = PreviousAttempt.entries.toList()
+        val counts = categories.map { User.getCounterByPreviousAttempt(it) }
+        val entries = counts.map { PieEntry(it.toFloat(), it) }
+        Log.d("SwipeFinishedFragment", "Entries: $entries")
+        Log.d("SwipeFinishedFragment", "Counts: $counts")
+
+        val pieDataSet = PieDataSet(entries, "Categories")
+        val colors = listOf(Color.GREEN, Color.RED, Color.YELLOW)
+        pieDataSet.colors = colors
+        val pieData = PieData(pieDataSet)
+
+        pieChart.data = pieData
+        pieChart.invalidate() // refresh
+
         return root
     }
 

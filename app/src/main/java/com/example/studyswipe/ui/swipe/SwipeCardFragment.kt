@@ -9,7 +9,6 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.example.studyswipe.R
 import com.example.studyswipe.app.PreviousAttempt
 import com.example.studyswipe.app.Question
 import com.example.studyswipe.app.Topic
@@ -146,7 +145,9 @@ class SwipeCardFragment : Fragment(), CardFragment.OnCardListener {
         User.applyQuestionResults(topicName, allQuestion)
         TopicLibrary.updateQuestions(topicName, allQuestion)
         this.context?.let { it1 -> com.example.studyswipe.utils.FileUtils.saveAsJson(it1) }
-        findNavController().navigate(R.id.navigation_home)
+        val action =
+            SwipeCardFragmentDirections.actionNavigationSwipeCardToNavigationSwipeFinished(topicName)
+        findNavController().navigate(action)
     }
 
 
