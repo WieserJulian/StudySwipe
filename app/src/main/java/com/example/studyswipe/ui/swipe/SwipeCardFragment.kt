@@ -118,6 +118,7 @@ class SwipeCardFragment : Fragment(), CardFragment.OnCardListener {
 
 
         swipeCardFragment = CardFragment()
+        // Prevent that more than one card is shown
         childFragmentManager.fragments.forEach() {
             childFragmentManager.beginTransaction().remove(it).commit()
         }
