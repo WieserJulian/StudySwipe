@@ -118,6 +118,9 @@ class SwipeCardFragment : Fragment(), CardFragment.OnCardListener {
 
 
         swipeCardFragment = CardFragment()
+        childFragmentManager.fragments.forEach() {
+            childFragmentManager.beginTransaction().remove(it).commit()
+        }
         childFragmentManager.beginTransaction()
             .add(binding.questionOutlet.id, swipeCardFragment)
             .commit()
