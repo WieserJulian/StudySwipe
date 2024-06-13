@@ -14,7 +14,7 @@
     <string name="searchTopics">Search Topics?</string>
 
     <!--    Hints -->
-    <string name="hintCickToFlip">Click the card to Flip it and see the anwser</string>
+    <string name="hintCickToFlip">Click the card to Flip it and see the answer</string>
     <string name="hintSwipeToLeft">Swipe to the left if you correctly answer the question</string>
     <string name="hintSwipeToRight">Swipe to the right if you incorrectly answer the question</string>
     <string name="hintSwipeToDown">Swipe down if you want to retry later this question</string>

@@ -90,7 +90,7 @@ class EditTopicFragment : Fragment() {
 
         binding.btnaddNewquestion.setOnClickListener {
             val uuid: String = UUID.randomUUID().toString()
-            val newQuestion = Question("New Question", "New Anwser", 1)
+            val newQuestion = Question("New Question", "New Answer", 1)
             editViewModel.addQuestion(uuid, newQuestion)
             displayQuestions(editViewModel.getAllQuestionsUuid())
         }
@@ -111,7 +111,7 @@ class EditTopicFragment : Fragment() {
         if (TopicLibrary.exists(topicName)) {
             editViewModel.addQuestions(TopicLibrary.getTopic(topicName).questions)
         } else {
-            editViewModel.addQuestions(listOf(Question("New Question", "New Anwser", 1)))
+            editViewModel.addQuestions(listOf(Question("New Question", "New Answer", 1)))
         }
         displayQuestions(editViewModel.getAllQuestionsUuid())
     }
