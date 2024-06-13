@@ -50,6 +50,7 @@ class StatisticFragment : Fragment() {
         val colors = listOf(Color.GREEN, Color.RED, Color.YELLOW)
         pieDataSet.colors = colors
         val pieData = PieData(pieDataSet)
+        pieData.setValueTextSize(30f)
 
         pieChart.data = pieData
         pieChart.invalidate() // refresh
