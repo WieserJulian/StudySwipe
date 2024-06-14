@@ -14,6 +14,7 @@ import com.example.studyswipe.databinding.FragmentStatisticBinding
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class StatisticFragment : Fragment() {
 
@@ -29,6 +30,7 @@ class StatisticFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentStatisticBinding.inflate(inflater, container, false)
+        requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).visibility = View.VISIBLE
         val root: View = binding.root
 
         binding.textNotifications.text = getString(R.string.statistic_title)
@@ -40,7 +42,8 @@ class StatisticFragment : Fragment() {
         pieChart.setUsePercentValues(true)
         pieChart.setDrawHoleEnabled(false)
 
-        val categories = PreviousAttempt.entries.toList()
+        var categories = PreviousAttempt.entries.toList()
+        categories = categories.filter { it != PreviousAttempt.RETRY } //TODO Remove this line when RETRY is implemented
         val counts = categories.map { User.getCounterByPreviousAttempt(it) }
         val entries = counts.map { PieEntry(it.toFloat(), it) }
         Log.d("SwipeFinishedFragment", "Entries: $entries")

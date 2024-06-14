@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.studyswipe.R
 import com.example.studyswipe.databinding.FragmentAddBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class AddFragment : Fragment() {
 
@@ -23,6 +24,7 @@ class AddFragment : Fragment() {
     ): View {
 
         _binding = FragmentAddBinding.inflate(inflater, container, false)
+        requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).visibility = View.VISIBLE
         val btnAddTopic = binding.btnAddTopic
         val btnEditTopic = binding.btnEditTopic
         val root: View = binding.root

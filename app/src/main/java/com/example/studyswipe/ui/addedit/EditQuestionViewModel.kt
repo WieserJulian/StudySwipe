@@ -53,4 +53,8 @@ class EditQuestionViewModel : ViewModel() {
     fun getAllQuestions(): List<Question> {
         return mutableSelectedItem.value?.values?.toList() ?: listOf()
     }
+
+    fun resetQuestions() {
+        mutableSelectedItem.value = mutableMapOf()
+    }
 }

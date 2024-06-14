@@ -33,7 +33,7 @@ class CardFragment : Fragment() {
             return false
         }
         fun endSwipe(cView: CardView, cardStart: Float) {}
-        fun preventSwipe() {}
+        fun preventSwipe(): Boolean {return true}
         fun swipeHandling(x: Float, cardStart: Float) {}
 
         fun enableSwipe(): Boolean {
@@ -81,7 +81,9 @@ class CardFragment : Fragment() {
     private fun handleSwipe() {
         cardView.setOnTouchListener(
             View.OnTouchListener { v, event ->
-                onCardListener?.preventSwipe()
+                if (onCardListener?.preventSwipe() == true) {
+                    return@OnTouchListener false
+                }
                 // variables to store current configuration of quote card.
                 val displayMetrics = resources.displayMetrics
                 val cardWidth = cardView.width

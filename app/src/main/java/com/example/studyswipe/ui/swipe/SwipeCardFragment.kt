@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.example.studyswipe.R
 import com.example.studyswipe.app.PreviousAttempt
 import com.example.studyswipe.app.Question
 import com.example.studyswipe.app.Topic
@@ -17,6 +18,7 @@ import com.example.studyswipe.app.User
 import com.example.studyswipe.databinding.FragmentSwipeCardBinding
 import com.example.studyswipe.ui.card.CardFragment
 import com.example.studyswipe.utils.Constants
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SwipeCardFragment : Fragment(), CardFragment.OnCardListener {
 
@@ -51,17 +53,22 @@ class SwipeCardFragment : Fragment(), CardFragment.OnCardListener {
         return true
     }
 
-    override fun preventSwipe() {
-
+    override fun preventSwipe(): Boolean {
+        if (hasFlipped) {
+            return false
+        }
+        return true
     }
 
     override fun swipeHandling(x: Float, cardStart: Float) {
         if (x < -Constants.MIN_SWIPE_DISTANCE && !hasMoved && state != PreviousAttempt.POSITIVE) {
             Log.d("SwipeCardFragment", "Swiped left")
+            hasMoved = true
             state = PreviousAttempt.POSITIVE
 
         } else if (x - cardStart > Constants.MIN_SWIPE_DISTANCE && state != PreviousAttempt.NEGATIVE) {
             Log.d("SwipeCardFragment", "Swiped right")
+            hasMoved = true
             state = PreviousAttempt.NEGATIVE
         }
     }
@@ -92,6 +99,7 @@ class SwipeCardFragment : Fragment(), CardFragment.OnCardListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSwipeCardBinding.inflate(inflater, container, false)
+        requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).visibility = View.GONE
 
         swipeCardViewModel =
             ViewModelProvider(this)[SwipeCardViewModel::class.java]
