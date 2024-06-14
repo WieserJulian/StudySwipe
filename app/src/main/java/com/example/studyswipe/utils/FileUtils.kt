@@ -119,7 +119,7 @@ object FileUtils {
                         question = "Which company manufactures the Mustang?",
                         answer = "Ford",
                         points = 1,
-                        previousAttempt = PreviousAttempt.RETRY
+                        previousAttempt = PreviousAttempt.POSITIVE
                     ),
                     Question(
                         question = "What is the most common type of fuel used in cars?",
@@ -131,7 +131,7 @@ object FileUtils {
                         question = "Which car is known as the 'People's Car'?",
                         answer = "Volkswagen Beetle",
                         points = 3,
-                        previousAttempt = PreviousAttempt.RETRY
+                        previousAttempt = PreviousAttempt.POSITIVE
                     ),
                     Question(
                         question = "What is the symbol for the car company Tesla?",
@@ -155,7 +155,7 @@ object FileUtils {
                         question = "What does the acronym BMW stand for?",
                         answer = "Bayerische Motoren Werke",
                         points = 3,
-                        previousAttempt = PreviousAttempt.RETRY
+                        previousAttempt = PreviousAttempt.POSITIVE
                     ),
                     Question(
                         question = "Which car is often referred to as a 'supercar killer'?",
@@ -190,7 +190,7 @@ object FileUtils {
                             question = "Who was the first female president of the United States?",
                             answer = "Hillary Clinton",
                             points = 3,
-                            previousAttempt = PreviousAttempt.RETRY
+                            previousAttempt = PreviousAttempt.POSITIVE
                         )))
             ))
             return

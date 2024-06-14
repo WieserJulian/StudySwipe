@@ -18,6 +18,7 @@ import com.example.studyswipe.R
 import com.example.studyswipe.app.Question
 import com.example.studyswipe.app.TopicLibrary
 import com.example.studyswipe.databinding.FragmentCreateTopicBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.UUID
 
 class EditTopicFragment : Fragment() {
@@ -29,7 +30,6 @@ class EditTopicFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var editViewModel: EditQuestionViewModel
     private var topicName = ""
-
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,9 +39,13 @@ class EditTopicFragment : Fragment() {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_topic_name, null)
         val editTextTopicName = dialogView.findViewById<EditText>(R.id.dialogTopicNameEditText)
 
+        requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).visibility = View.GONE
         editViewModel = ViewModelProvider(requireActivity()).get(EditQuestionViewModel::class.java)
         _binding = FragmentCreateTopicBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        childFragmentManager.fragments.forEach {
+            childFragmentManager.beginTransaction().remove(it).commit()
+        }
         topicName = arguments?.getString("topicName") ?: ""
         if (topicName.isEmpty()) {
 
@@ -72,7 +76,6 @@ class EditTopicFragment : Fragment() {
                 }
                 .setNegativeButton("Cancel", null)
                 .show()
-
         } else {
             initView()
         }

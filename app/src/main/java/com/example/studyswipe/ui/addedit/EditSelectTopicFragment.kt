@@ -17,6 +17,7 @@ import com.example.studyswipe.app.TopicLibrary
 import com.example.studyswipe.databinding.FragmentEditTopicSelectBinding
 import com.example.studyswipe.ui.topic.TopicCardFragment
 import com.example.studyswipe.utils.Constants
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class EditSelectTopicFragment : Fragment(), TopicCardFragment.OnTopicCardClickListener {
 
@@ -58,6 +59,7 @@ class EditSelectTopicFragment : Fragment(), TopicCardFragment.OnTopicCardClickLi
     ): View {
         _binding = FragmentEditTopicSelectBinding.inflate(LayoutInflater.from(context))
         val searchView = binding.searchTopics
+        requireActivity().findViewById<BottomNavigationView>(com.example.studyswipe.R.id.nav_view).visibility = View.GONE
         val adapter = ArrayAdapter(
             requireContext(),
             R.layout.simple_dropdown_item_1line,

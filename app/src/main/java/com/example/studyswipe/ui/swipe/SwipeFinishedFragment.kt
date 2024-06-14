@@ -15,6 +15,7 @@ import com.example.studyswipe.databinding.FragmentSwipeFinishedBinding
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class SwipeFinishedFragment : Fragment() {
 
@@ -27,6 +28,7 @@ class SwipeFinishedFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSwipeFinishedBinding.inflate(inflater, container, false)
+        requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).visibility = View.GONE
         val root = binding.root
 
 
@@ -44,7 +46,8 @@ class SwipeFinishedFragment : Fragment() {
         pieChart.setUsePercentValues(true)
         pieChart.setDrawHoleEnabled(false)
 
-        val categories = PreviousAttempt.entries.toList()
+        var categories = PreviousAttempt.entries.toList()
+        categories = categories.filter { it != PreviousAttempt.RETRY } //TODO Remove this line when RETRY is implemented
         val counts = categories.map { countByPreviousAttempt(questionType, it) }
         val entries = counts.map { PieEntry(it.toFloat(), it) }
 
@@ -59,6 +62,7 @@ class SwipeFinishedFragment : Fragment() {
 
 
         binding.finishedSwipeClose.setOnClickListener() {
+            requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).visibility = View.VISIBLE
             findNavController().navigate(R.id.navigation_home)
 
         }
