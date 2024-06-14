@@ -2,9 +2,9 @@ package com.example.studyswipe.app
 
 object User {
 
-    var positiveCounter: Int = 1
-    var negativeCounter: Int = 5
-    var retryCounter: Int = 3
+    var positiveCounter: Int = 0
+    var negativeCounter: Int = 0
+    var retryCounter: Int = 0
     var points: Double = 0.0
     var lastTopic: String = ""
 

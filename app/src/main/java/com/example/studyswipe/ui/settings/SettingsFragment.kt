@@ -6,10 +6,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.example.studyswipe.R
 import com.example.studyswipe.utils.FileUtils
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -20,6 +22,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
         val exportPreference: Preference? = findPreference("export")
+        requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).visibility = View.GONE
         exportPreference?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             // Create and show your dialog here
             Log.d("SettingsFragment", "Exporting")

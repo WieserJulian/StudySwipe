@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.studyswipe.R
 import com.example.studyswipe.app.Question
 import com.example.studyswipe.databinding.FragmentEditQuestionBinding
 import com.example.studyswipe.ui.card.CardFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.UUID
 
 class EditQuestionFragment : Fragment(), CardFragment.OnCardListener {
@@ -51,6 +53,7 @@ class EditQuestionFragment : Fragment(), CardFragment.OnCardListener {
 
         editViewModel = ViewModelProvider(requireActivity()).get(EditQuestionViewModel::class.java)
         _binding = FragmentEditQuestionBinding.inflate(inflater, container, false)
+        requireActivity().findViewById<BottomNavigationView>(R.id.nav_view).visibility = View.GONE
         val root: View = binding.root
         val uuid = arguments?.getString("questionUID")
         if (uuid == null) {
